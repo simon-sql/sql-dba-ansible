@@ -1,0 +1,10 @@
+---
+# Language: Ansible
+
+# https://dbatools.io/
+
+- name: Install dbatools to linux server
+  hosts: all
+
+  tasks:
+    - include_tasks: ./tasks/install-dbatools.yml

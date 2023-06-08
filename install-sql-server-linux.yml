@@ -1,0 +1,33 @@
+---
+# Language: Ansible
+
+# https://github.com/linux-system-roles/mssql
+
+- name: Install SQL Server 2022
+  hosts: all
+  
+  vars:
+    mssql_accept_microsoft_odbc_driver_17_for_sql_server_eula: true
+    mssql_accept_microsoft_cli_utilities_for_sql_server_eula: true
+    mssql_accept_microsoft_sql_server_standard_eula: true
+    mssql_version: 2022
+    mssql_password: "p@55w0rD"
+    mssql_edition: Evaluation
+    mssql_install_powershell: true
+    mssql_enable_sqlagent: true
+    mssql_rhel_tuned: false
+    # Install Ola Hallengren's Maintenance Solution
+    # https://ola.hallengren.com/
+    mssql_post_input_sql_file: MaintenanceSolution.sql
+
+  become: yes
+  become_user: root
+
+  roles:
+    - role: 'roles/mssql'
+
+  post_tasks:
+    - include_tasks: ./tasks/install-dbatools.yml
+
+     
+    

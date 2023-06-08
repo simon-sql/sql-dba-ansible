@@ -1,0 +1,37 @@
+---
+# Language: Ansible
+
+# https://dbatools.io/
+
+# Check if dbatools is installed
+- name: Check if dbatools is installed
+  ansible.builtin.shell: |
+    if (Get-Module -ListAvailable -Name dbatools) {
+      Write-Host "true"
+    }
+    else {
+      Write-Host "false"
+    }
+  args:
+    executable: /usr/bin/pwsh
+
+  # Do not report this task as having changed anything on the target system
+  changed_when: false
+
+  # Register the output of this task to a variable named dbatools_installed
+  register: dbatools_installed
+
+# Print the result of the previous task
+- name: Print the result
+  ansible.builtin.debug:
+    var: dbatools_installed.stdout
+
+# Execute different tasks based on whether dbatools is installed or not
+- name: Install dbatools
+  ansible.builtin.shell: |
+    Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+    Install-Module dbatools -Force
+    Set-PSRepository -Name PSGallery -InstallationPolicy Untrusted
+  args:
+    executable: /usr/bin/pwsh
+  when: dbatools_installed.stdout == "false"
