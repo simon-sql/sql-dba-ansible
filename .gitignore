@@ -16,5 +16,4 @@ __pycache__/
 /dbatools/*.nupkg
 /rpm/
 /mssql-scripts/MaintenanceSolution.sql
-/roles/
 /inventory/
