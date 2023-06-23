@@ -18,6 +18,7 @@
     mssql_rhel_tuned: false
     # false for centos container
     mssql_manage_firewall: false
+    # read scale
     mssql_ha_configure: true
     mssql_ha_ag_cluster_type: none
     mssql_ha_endpoint_port: 5022
